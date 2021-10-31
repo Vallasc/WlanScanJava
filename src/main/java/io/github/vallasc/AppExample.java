@@ -7,6 +7,7 @@ import io.github.vallasc.WlanScanner.OperatingSystemNotDefinedException;
 public class AppExample {
 
     // mvn compile exec:java
+    // on Linux https://github.com/bmegli/wifi-scan
     public static void main( String[] args ) {
         System.out.println( "\nWlanScanner\n" );
         WlanScanner w = new WlanScanner();
