@@ -23,5 +23,7 @@
 hs_err_pid*
 
 bin
-.vscode
+.vscode/
+.classpath
+.project
 target
