@@ -8,7 +8,7 @@ public class AppExample {
 
     // mvn compile exec:java
     public static void main( String[] args ) {
-        System.out.println( "WlanScanner" );
+        System.out.println( "\nWlanScanner\n" );
         WlanScanner w = new WlanScanner();
         try {
             APInfo[] apList = w.scanNetworks();
