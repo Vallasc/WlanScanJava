@@ -18,7 +18,7 @@ public class WlanScanner {
     private boolean isLinux64 = false;
 
     private final String windowsBinPath = ".\\bin\\WlanScan.exe";
-    private final String linuxBinPath = "./bin/WlanScan";
+    private final String linuxBinPath = "./bin/WlanScanLinux";
 
     private final Gson gson = new Gson();
 
@@ -26,28 +26,40 @@ public class WlanScanner {
         if(SystemUtils.IS_OS_WINDOWS && ArchUtils.getProcessor().is64Bit() && ArchUtils.getProcessor().isX86()){
             isWindows64 = true;
             try {
-                extractFromResources("/WlanScan.exe", windowsBinPath);
+                extractFromResources("/win64/WlanScan.exe", windowsBinPath);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else if(SystemUtils.IS_OS_LINUX && ArchUtils.getProcessor().is64Bit() && ArchUtils.getProcessor().isX86()){
             isLinux64 = true;
+            try {
+                extractFromResources("/linux64/WlanScanLinux", linuxBinPath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
 
     public APInfo[] scanNetworks() throws OperatingSystemNotDefinedException, IOException {
         if(isWindows64)
-            return scanWindows();
+            return scanWindows64();
         else if(isLinux64)
-            return new APInfo[0];
+            return scanLinux64();
         else 
             throw new OperatingSystemNotDefinedException();
     }
 
-    private APInfo[] scanWindows() throws IOException{
+    private APInfo[] scanWindows64() throws IOException{
         Process process = Runtime.getRuntime().exec(windowsBinPath + " -t -n -j");
         String outJson = new String(process.getInputStream().readAllBytes(), StandardCharsets.UTF_16LE);
+        return gson.fromJson(outJson, APInfo[].class);
+    }
+
+    private APInfo[] scanLinux64() throws IOException{
+        Runtime.getRuntime().exec("chmod +x " + linuxBinPath);
+        Process process = Runtime.getRuntime().exec(linuxBinPath + " -j");
+        String outJson = new String(process.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
         return gson.fromJson(outJson, APInfo[].class);
     }
 

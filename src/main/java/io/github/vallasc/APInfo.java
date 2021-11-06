@@ -5,12 +5,14 @@ public class APInfo {
     private final String SSID;
     private final double signal;
     private final double frequency;
+    private final String interfaceName;
 
-    public APInfo(String BSSID, String SSID, double signal, double frequency) {
+    public APInfo(String BSSID, String SSID, double signal, double frequency, String interfaceName) {
         this.BSSID = BSSID;
         this.SSID = SSID;
         this.signal = signal;
         this.frequency = frequency;
+        this.interfaceName = interfaceName;
     }
 
     public double getFrequency() {
@@ -29,11 +31,16 @@ public class APInfo {
         return BSSID;
     }
 
+    public String getInterfaceName() {
+        return interfaceName;
+    }
+
     @Override
     public String toString() {
         return "BSSID: " + BSSID + "\n" +
                 "SSID: " + SSID + "\n" +
                 "Signal: " + signal + "\n" +
-                "Frequency: " + frequency;
+                "Frequency: " + frequency + "\n" +
+                "Interface name: " + interfaceName;
     }
 }
