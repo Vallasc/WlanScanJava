@@ -69,7 +69,7 @@ public class WlanScanner {
         Files.createDirectories(file.getParentFile().toPath());
         file.createNewFile();
         InputStream link = WlanScanner.class.getResourceAsStream(fileInputPath);
-        Files.copy(link, file.getAbsoluteFile().toPath(), StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(link, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
         link.close();
         return file;
     }
